@@ -22,17 +22,15 @@ func connLostHandler(c mqtt.Client, err error) {
 func main() {
 
 	//mqtt.DEBUG = log.New(os.Stderr, "DEBUG ", log.Ltime)
+	clientID := os.Args[1]
+	topic := os.Args[2]
 	//create a ClientOptions
 	opts := mqtt.NewClientOptions().
 		AddBroker("tcp://broker.hivemq.com:1883").
-		SetClientID("ottowan01").
+		SetClientID(clientID).
 		SetDefaultPublishHandler(messageHandler).
 		SetConnectionLostHandler(connLostHandler)
 
-	topic := "home/airconditioner/livingroom/temperature/unit"
-
-	//topic := "home/airconditioner/livingroom/temperature"
-	//topic := "home/#"
 	opts.OnConnect = func(c mqtt.Client) {
 		fmt.Printf("Client connected, subscribing to: " + topic + "\n")
 
